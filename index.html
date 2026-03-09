@@ -398,31 +398,53 @@
   </style>
 </head>
 <body>
-  <audio id="bgm" loop>
-  <source src="https://files.catbox.moe/6zb2bx.mp3" type="audio/mpeg">
-</audio>
+  <audio id="bgm" loop></audio>
 
-<div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
-  <button id="toggleMusic" style="background: #000; color: #ff2d55; border: 2px solid #007bff; padding: 10px; border-radius: 50%; width: 50px; height: 50px; font-family: 'Orbitron'; cursor: pointer; box-shadow: 0 0 10px #007bff;">
+<div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 10px; align-items: center;">
+  <button id="toggleMusic" style="background: #000; color: #ff2d55; border: 2px solid #007bff; border-radius: 50%; width: 55px; height: 55px; font-family: 'Orbitron'; cursor: pointer; box-shadow: 0 0 15px #007bff;">
     🎵
+  </button>
+  <button id="nextMusic" style="background: #000; color: #007bff; border: 2px solid #ff2d55; border-radius: 8px; padding: 5px 10px; font-family: 'Orbitron'; font-size: 9px; cursor: pointer; box-shadow: 0 0 5px #ff2d55;">
+    NEXT TRACK
   </button>
 </div>
 
 <script>
+  // DAFTAR 4 LAGU LU, GANTI LINKNYA DI SINI BABI!
+  const songs = [
+    "https://files.catbox.moe/6zb2bx.mp3", // Kekasih Bayangan
+    "https://files.catbox.moe/sj0m68.mp3", // Lagu Temen 1
+    "https://files.catbox.moe/q8sxt2.mp3", // Lagu Temen 2
+    "https://files.catbox.moe/9sw6yz.mp3"  // Lagu Temen 3
+  ];
+  
+  let currentSong = 0;
   const music = document.getElementById('bgm');
   const btn = document.getElementById('toggleMusic');
+  const nextBtn = document.getElementById('nextMusic');
+
+  music.src = songs[currentSong];
+
   btn.onclick = () => {
     if (music.paused) { 
       music.play(); 
-      btn.style.color = "#007bff"; 
       btn.innerHTML = "🔊"; 
+      btn.style.boxShadow = "0 0 20px #007bff";
     } else { 
       music.pause(); 
-      btn.style.color = "#ff2d55"; 
       btn.innerHTML = "🔇"; 
+      btn.style.boxShadow = "0 0 10px #ff2d55";
     }
   };
+
+  nextBtn.onclick = () => {
+    currentSong = (currentSong + 1) % songs.length;
+    music.src = songs[currentSong];
+    music.play();
+    btn.innerHTML = "🔊";
+  };
 </script>
+
 
   <div class="wrap">
 
