@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gixsz & Rulzz — Neon Red</title>
+  <style>
+    :root{
+      --bg: #0b0f13;
+      --panel: #12171d;
+      --text: #e7e7ea;
+      --muted: #a6a8ad;
+      --neon: #ff2d55; /* merah neon */
+      --neon-soft: rgba(255,45,85,.45);
+    }
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#0a0d12; --panel:#12171d; }
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 50% -10%, rgba(255,45,85,.08), transparent 60%),
+                  radial-gradient(800px 400px at -10% 20%, rgba(255,45,85,.06), transparent 60%),
+                  radial-gradient(800px 400px at 110% 30%, rgba(255,45,85,.06), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      line-height:1.7;
+    }
+    .wrap{max-width: 920px; margin: 0 auto; padding: 28px 16px 64px}
+
+    /* Neon red helpers */
+    .neon{
+      color: var(--neon);
+      text-shadow: 0 0 6px var(--neon), 0 0 14px var(--neon), 0 0 32px var(--neon);
+      letter-spacing:.5px;
+    }
+    .glow{ box-shadow: 0 0 0 1px rgba(255,45,85,.35) inset, 0 0 22px var(--neon-soft), 0 0 60px rgba(255,45,85,.25); }
+
+    header{
+      display:flex; align-items:center; gap:12px; margin-bottom: 28px; opacity:.95
+    }
+    .badge{font-size:12px; color:var(--muted); background:#0f141a; padding:3px 10px; border-radius:999px; border:1px solid rgba(255,45,85,.22)}
+
+    .hero{ text-align:center; padding: 56px 12px 36px; background: transparent; border-radius: 24px; }
+    .hero h1{ font-size: clamp(38px, 6vw, 72px); margin:0 0 18px; font-weight: 800; }
+    .hero p{ font-size: clamp(16px, 2.4vw, 20px); color:#d9d9dc; max-width: 820px; margin: 0 auto; }
+
+    .grid{ display:grid; grid-template-columns: 1fr; gap: 24px; margin-top: 36px; }
+    @media (min-width: 760px){ .grid{ grid-template-columns: 1fr 1fr; } }
+
+    .card{
+      background: linear-gradient(180deg, #0f141a, #0b0f13 38%);
+      border-radius: 22px; padding: 28px; position:relative; border:1px solid rgba(255,45,85,.18);
+      transition: transform .15s ease, box-shadow .15s ease, border-color .2s ease;
+    }
+    .card:hover{ transform: translateY(-2px); box-shadow: 0 0 28px rgba(255,45,85,.28); border-color: rgba(255,45,85,.35); }
+
+    .card h2{ font-size: clamp(24px, 3.5vw, 34px); margin: 0 0 10px; font-weight: 800; }
+    .price{ font-size: 20px; color:#f0bbc7; margin-bottom: 16px }
+    .list{ padding-left:0; list-style:none; margin:0 0 22px }
+    .list li{ display:flex; align-items:start; gap:10px; padding:8px 0; border-bottom: 1px dashed rgba(255,45,85,.14) }
+    .list li:last-child{ border-bottom:none }
+
+    .btn{
+      display:inline-flex; align-items:center; gap:10px; padding: 14px 18px; border-radius: 14px;
+      background: radial-gradient(120% 120% at 50% 0%, rgba(255,45,85,.4), rgba(255,45,85,.28) 60%, rgba(255,45,85,.12) 100%);
+      border: 1px solid rgba(255,45,85,.55);
+      color: white; text-decoration:none; font-weight:700; letter-spacing:.2px;
+      box-shadow: 0 0 14px rgba(255,45,85,.55), inset 0 0 14px rgba(255,45,85,.25);
+      transition: transform .15s ease, box-shadow .2s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 0 24px rgba(255,45,85,.75), inset 0 0 22px rgba(255,45,85,.32); }
+
+    .section{ margin-top: 26px }
+    .section h3{ font-size: clamp(22px, 3vw, 28px); margin: 0 0 12px }
+    .muted{ color: var(--muted) }
+
+    /* Progress bar */
+    .skill{
+      margin:12px 0;
+    }
+    .skill-name{
+      font-weight:600;
+      margin-bottom:6px;
+    }
+    .progress{
+      background:#1a1f26;
+      border-radius:10px;
+      overflow:hidden;
+      height:18px;
+    }
+    .progress-bar{
+      height:100%;
+      background: var(--neon);
+      text-align:right;
+      padding-right:6px;
+      color:#fff;
+      font-size:12px;
+      font-weight:600;
+      line-height:18px;
+    }
+
+    footer{ margin-top: 46px; padding: 28px 0 8px; text-align:center; color:#b9bac0; font-size:14px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="neon" style="font-weight:800">Gixsz</div>
+      <span class="badge">Preview</span>
+    </header>
+
+   <section class="hero glow">
+  <!-- Avatar -->
+  <img src="https://files.catbox.moe/91zhmn.jpg" alt="Avatar" 
+       style="width:100px;height:100px;border-radius:50%;margin-bottom:18px;box-shadow:0 0 18px rgba(255,45,85,.6);" />
+
+  <h1 class="neon">Gixsz & Skylighttt Store</h1>
+  <p>
+    Halo<br/>
+    Silahkan Belanja di Gixsz & Skylighttt Store
+  </p>
+</section>
+
+
+    <div class="grid">
+      <!-- Card -->
+      <article class="card">
+        <h2 class="neon">Produk Kami</h2>
+        <div class="price">Cek Dibawah</div>
+        <ul class="list">
+          <li>AM (ALIGHT MOTION) CUMA 7K PER AKUN (order ke gixsz) </li>
+          <li>JASA EDIT 3K PER VIDEO (order ke Skylighttt)</li>
+        </ul>
+        <a class="btn" href="https://wa.me/6283897499087?text=Woi_Gw_mau_order_AM_Premium_babi!" target="_blank">Order ke Gixsz</a>
+
+        <a class="btn" href="https://wa.me/6289528692798?text=Woi_Rulzz_gw_mau_order_jasa_edit_kontol!" target="_blank">Order ke Skylighttt</a>
+
+      </article>
+    </div>
+
+    <section class="section">
+      <article class="card">
+        <h3 class="neon">Skill</h3>
+        <div class="skill">
+          <div class="skill-name">Bengong</div>
+          <div class="progress"><div class="progress-bar" style="width: 90%;">90%</div></div>
+        </div>
+        <div class="skill">
+          <div class="skill-name">Cari Html</div>
+          <div class="progress"><div class="progress-bar" style="width: 75%;">75%</div></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="section">
+      <article class="card">
+        <h3 class="neon">Channel Informasi</h3>
+        <p class="muted">isi sendiri.</p>
+        <a class="btn" href="https://t.me/">Maaf Chanel Belum Tersedia</a>
+      </article>
+    </section>
+
+    <footer>
+      © 2025 <span class="neon" style="text-shadow:none;color:#ff97a9">Gixsz</span>. All Rights Reserved.
+    </footer>
+  </div>
+</body>
+</html>
