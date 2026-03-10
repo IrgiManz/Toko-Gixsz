@@ -398,53 +398,95 @@
   </style>
 </head>
 <body>
-  <audio id="bgm" loop></audio>
+<audio id="bgm" loop></audio>
 
-<div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 10px; align-items: center;">
-  <button id="toggleMusic" style="background: #000; color: #ff2d55; border: 2px solid #007bff; border-radius: 50%; width: 55px; height: 55px; font-family: 'Orbitron'; cursor: pointer; box-shadow: 0 0 15px #007bff;">
-    🎵
-  </button>
-  <button id="nextMusic" style="background: #000; color: #007bff; border: 2px solid #ff2d55; border-radius: 8px; padding: 5px 10px; font-family: 'Orbitron'; font-size: 9px; cursor: pointer; box-shadow: 0 0 5px #ff2d55;">
-    NEXT TRACK
-  </button>
+<div id="playlistContainer" style="
+  position: fixed; bottom: 20px; right: 20px; z-index: 1000;
+  background: #000; color: #fff;
+  border-radius: 15px; padding: 15px;
+  width: 250px; font-family: 'Orbitron'; text-align: left;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  overflow: hidden; /* Biar animasi border gak keluar */
+  border: 4px solid transparent; /* Border dasar, nanti diisi animasi */
+">
+
+  <div style="
+    position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: conic-gradient(transparent, transparent, transparent, #fff);
+    animation: rotateBorder 4s linear infinite;
+    z-index: -1;
+  "></div>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+    <span style="font-size: 14px; text-transform: uppercase;">SENANDUNG DIGITAL</span>
+    <button id="togglePlaylist" style="background: none; border: 1px solid #fff; color: #fff; border-radius: 5px; cursor: pointer; padding: 2px 5px; font-size: 10px;">−</button>
+  </div>
+
+  <div id="songList" style="display: block; font-size: 12px; max-height: 150px; overflow-y: auto;">
+    </div>
 </div>
+
+<style>
+  @keyframes rotateBorder {
+    100% { transform: rotate(1s); }
+  }
+  /* Gaya buat List Item (Lagu) pas di-hover atau aktif */
+  .song-item { cursor: pointer; padding: 5px; border-radius: 5px; }
+  .song-item:hover { background: #333; }
+  .song-item.active { background: #fff; color: #000; font-weight: bold; }
+</style>
 
 <script>
   // DAFTAR 4 LAGU LU, GANTI LINKNYA DI SINI BABI!
   const songs = [
-    "https://files.catbox.moe/6zb2bx.mp3", // Kekasih Bayangan
-    "https://files.catbox.moe/sj0m68.mp3", // Lagu Temen 1
-    "https://files.catbox.moe/rl7iyf.mp3", // Lagu Temen 2
-    "https://files.catbox.moe/9sw6yz.mp3"  // Lagu Temen 3
+    { title: "Kekasih Bayangan", src: "https://files.catbox.moe/6zb2bx.mp3" },
+    { title: "No Surprise", src: "https://files.catbox.moe/sj0m68.mp3" },
+    { title: "Element - Rahasia Hati", src: "https://files.catbox.moe/rl7iyf.mp3" },
+    { title: "The night we met", src: "https://files.catbox.moe/9sw6yz.mp3" }
   ];
   
   let currentSong = 0;
   const music = document.getElementById('bgm');
-  const btn = document.getElementById('toggleMusic');
-  const nextBtn = document.getElementById('nextMusic');
+  const songList = document.getElementById('songList');
+  const toggleBtn = document.getElementById('togglePlaylist');
 
-  music.src = songs[currentSong];
+  // NAMPILIN LIST LAGU SECARA OTOMATIS
+  songs.forEach((song, index) => {
+    const div = document.createElement('div');
+    div.className = 'song-item';
+    if (index === currentSong) div.classList.add('active'); // Tandai lagu pertama yang aktif
+    div.innerHTML = (index + 1) + ". " + song.title;
+    div.onclick = () => playSong(index); // Klik lagu buat puter
+    songList.appendChild(div);
+  });
 
-  btn.onclick = () => {
-    if (music.paused) { 
-      music.play(); 
-      btn.innerHTML = "🔊"; 
-      btn.style.boxShadow = "0 0 20px #007bff";
-    } else { 
-      music.pause(); 
-      btn.innerHTML = "🔇"; 
-      btn.style.boxShadow = "0 0 10px #ff2d55";
+  // FUNGSI BUAT PUTER LAGU
+  function playSong(index) {
+    currentSong = index;
+    music.src = songs[currentSong].src;
+    music.play();
+    
+    // Update Tampilan List (Ganti lagu aktif)
+    const allSongs = document.querySelectorAll('.song-item');
+    allSongs.forEach(s => s.classList.remove('active'));
+    allSongs[currentSong].classList.add('active');
+  }
+
+  // Tombol Minimalis buat minimize/restore list
+  toggleBtn.onclick = () => {
+    if (songList.style.display === 'block') {
+      songList.style.display = 'none';
+      toggleBtn.innerHTML = '+';
+    } else {
+      songList.style.display = 'block';
+      toggleBtn.innerHTML = '−';
     }
   };
 
-  nextBtn.onclick = () => {
-    currentSong = (currentSong + 1) % songs.length;
-    music.src = songs[currentSong];
-    music.play();
-    btn.innerHTML = "🔊";
-  };
+  // Mulai lagu pertama secara otomatis (tapi browser biasanya blokir auto-play)
+  // Jadi biarin lagu pertama siap, user tinggal klik lagu di list.
+  music.src = songs[currentSong].src;
 </script>
-
 
   <div class="wrap">
 
@@ -477,7 +519,7 @@
           <li>Jasa Edit — cuma <strong style="color:#000">3K</strong> per video (order ke Skylighttt)</li>
         </ul>
         <div class="btn-row">
-          <a class="btn btn-solid" href="https://wa.me/6283897499087?text=Halooo_Sayang_aku_mau_order_am_prem_nya_donk" target="_blank">
+          <a class="btn btn-solid" href="https://wa.me/6287779417785?text=Halooo_Sayang_aku_mau_order_am_prem_nya_donk" target="_blank">
             ⚡ Order ke Gixsz
           </a>
           <a class="btn btn-outline" href="https://wa.me/6289528692798?text=assalamualaikum_bang_gw_mau_order_ jasa edit🙏🏻" target="_blank">
@@ -514,7 +556,7 @@
     </section>
 
     <footer>
-      © 2025
+      © 2026
       <span style="color:#000; font-family:'Orbitron',monospace; font-size:11px; letter-spacing:2px;">GIXSZ</span>
       &nbsp;×&nbsp;
       <span style="color:#666; font-family:'Orbitron',monospace; font-size:11px; letter-spacing:2px;">SKYLIGHTTT</span>
