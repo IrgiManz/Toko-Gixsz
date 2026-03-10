@@ -4,104 +4,106 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gixsz & Skylighttt Store</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f5f5f5;
-      --panel: #ffffff;
-      --text: #111111;
-      --muted: #666;
-      --black: #000000;
-      --gray: #ddd;
-      --light-gray: #999;
+      --space-bg: #020814;
+      --space-deep: #030d1a;
+      --nebula-1: #0a1628;
+      --nebula-2: #0d1f3c;
+      --star-white: #e8f4ff;
+      --planet-blue: #1a6fcc;
+      --planet-ring: #4fa3e0;
+      --meteor-tail: #88ccff;
+      --accent-cyan: #00d4ff;
+      --accent-purple: #7b4fff;
+      --accent-gold: #ffc847;
+      --text-bright: #e0f0ff;
+      --text-dim: #8ab0cc;
+      --card-bg: rgba(8, 20, 45, 0.85);
+      --card-border: rgba(0, 212, 255, 0.2);
+      --glow-cyan: 0 0 20px rgba(0, 212, 255, 0.4);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
 
     body {
-      font-family: 'Rajdhani', sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: 'Exo 2', sans-serif;
+      background: var(--space-bg);
+      color: var(--text-bright);
       line-height: 1.7;
       overflow-x: hidden;
     }
 
-    /* Animated scanlines */
+    /* ===== SPACE CANVAS ===== */
+    #spaceCanvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ===== NEBULA BG ===== */
+    .nebula-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 15% 20%, rgba(30, 15, 80, 0.5) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 85% 70%, rgba(0, 40, 100, 0.4) 0%, transparent 60%),
+        radial-gradient(ellipse 100% 80% at 50% 50%, rgba(2, 8, 20, 1) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    /* ===== SCANLINES ===== */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 3px,
-        rgba(0,0,0,.018) 3px,
-        rgba(0,0,0,.018) 4px
+        0deg, transparent, transparent 3px,
+        rgba(0, 212, 255, 0.015) 3px, rgba(0, 212, 255, 0.015) 4px
       );
       pointer-events: none;
       z-index: 999;
-      animation: scanmove 8s linear infinite;
+      animation: scanmove 10s linear infinite;
     }
     @keyframes scanmove {
       0% { background-position: 0 0; }
       100% { background-position: 0 200px; }
     }
 
-    /* Spotlight sweep */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      animation: spotlight 6s ease-in-out infinite alternate;
-    }
-    @keyframes spotlight {
-      0%   { background: radial-gradient(ellipse 700px 400px at 20% 20%, rgba(0,0,0,.04), transparent 60%); }
-      50%  { background: radial-gradient(ellipse 700px 400px at 80% 50%, rgba(0,0,0,.03), transparent 60%); }
-      100% { background: radial-gradient(ellipse 700px 400px at 40% 80%, rgba(0,0,0,.04), transparent 60%); }
-    }
-
     .wrap {
       position: relative;
-      z-index: 1;
-      max-width: 940px;
+      z-index: 10;
+      max-width: 960px;
       margin: 0 auto;
-      padding: 28px 16px 72px;
+      padding: 28px 16px 80px;
       animation: fadein .8s ease both;
     }
     @keyframes fadein {
-      from { opacity: 0; transform: translateY(16px); }
+      from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .neon-white {
-      color: #000;
-      text-shadow: 0 0 6px rgba(0,0,0,.2);
-    }
-    .neon-gray {
-      color: #444;
-    }
-
-    /* Glitch effect */
+    /* ===== GLITCH ===== */
     .glitch {
       position: relative;
       display: inline-block;
     }
-    .glitch::before,
-    .glitch::after {
+    .glitch::before, .glitch::after {
       content: attr(data-text);
       position: absolute;
       inset: 0;
     }
     .glitch::before {
-      color: #555;
+      color: var(--accent-cyan);
       animation: glitch1 3.5s infinite;
       clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
     }
     .glitch::after {
-      color: #000;
+      color: var(--accent-purple);
       animation: glitch2 3.5s infinite;
       clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
     }
@@ -116,6 +118,7 @@
       99% { transform: translate(-3px, -2px); opacity: .4; }
     }
 
+    /* ===== HEADER ===== */
     header {
       display: flex;
       align-items: center;
@@ -126,29 +129,31 @@
       font-family: 'Orbitron', monospace;
       font-weight: 900;
       font-size: 22px;
-      letter-spacing: 3px;
-      color: #000;
-      text-shadow: 0 0 10px rgba(0,0,0,.2);
+      letter-spacing: 4px;
+      color: var(--accent-cyan);
+      text-shadow: 0 0 20px rgba(0, 212, 255, 0.6), 0 0 40px rgba(0, 212, 255, 0.3);
     }
     .badge {
       font-size: 11px;
-      color: #666;
-      background: rgba(0,0,0,.05);
+      color: var(--accent-cyan);
+      background: rgba(0, 212, 255, 0.1);
       padding: 3px 12px;
       border-radius: 999px;
-      border: 1px solid rgba(0,0,0,.15);
+      border: 1px solid rgba(0, 212, 255, 0.3);
       letter-spacing: 1px;
       text-transform: uppercase;
     }
 
+    /* ===== HERO ===== */
     .hero {
       text-align: center;
       padding: 60px 20px 44px;
       border-radius: 24px;
-      background: linear-gradient(160deg, rgba(0,0,0,.04), rgba(0,0,0,.01));
-      border: 1px solid rgba(0,0,0,.1);
+      background: linear-gradient(160deg, rgba(0, 30, 70, 0.6), rgba(5, 10, 30, 0.8));
+      border: 1px solid rgba(0, 212, 255, 0.25);
       position: relative;
       overflow: hidden;
+      backdrop-filter: blur(4px);
     }
     .hero::before {
       content: '';
@@ -156,46 +161,64 @@
       top: -1px; left: -100%;
       width: 60%;
       height: 2px;
-      background: linear-gradient(90deg, transparent, #000, transparent);
+      background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
       animation: border-slide 3s ease-in-out infinite;
     }
     @keyframes border-slide {
       0%   { left: -60%; }
       100% { left: 160%; }
     }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 0%, rgba(0, 212, 255, 0.07), transparent 70%),
+        radial-gradient(ellipse 40% 60% at 80% 100%, rgba(123, 79, 255, 0.06), transparent 70%);
+      pointer-events: none;
+    }
 
     .hero img {
       width: 400px;
+      max-width: 100%;
       height: 240px;
-      border-radius: 6px;
+      border-radius: 12px;
       object-fit: cover;
-      margin-bottom: 20px;
-      border: 2px solid rgba(0,0,0,.15);
-      filter: grayscale(100%) contrast(1.1);
-      box-shadow: 0 0 0 1px rgba(0,0,0,.08), 0 0 20px rgba(0,0,0,.1);
-      animation: avatar-flicker 5s ease-in-out infinite;
+      margin-bottom: 24px;
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      filter: brightness(0.9) saturate(1.2);
+      box-shadow: 0 0 30px rgba(0, 212, 255, 0.2), 0 0 60px rgba(0, 212, 255, 0.1);
+      animation: avatar-pulse 5s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
     }
-    @keyframes avatar-flicker {
-      0%,100% { box-shadow: 0 0 0 1px rgba(0,0,0,.08), 0 0 20px rgba(0,0,0,.1); }
-      50%      { box-shadow: 0 0 0 1px rgba(0,0,0,.2),  0 0 35px rgba(0,0,0,.18); }
+    @keyframes avatar-pulse {
+      0%,100% { box-shadow: 0 0 30px rgba(0, 212, 255, 0.2), 0 0 60px rgba(0, 212, 255, 0.1); }
+      50%      { box-shadow: 0 0 50px rgba(0, 212, 255, 0.4), 0 0 80px rgba(0, 212, 255, 0.2); }
     }
 
     .hero h1 {
       font-family: 'Orbitron', monospace;
-      font-size: clamp(22px, 4.5vw, 50px);
+      font-size: clamp(22px, 4.5vw, 46px);
       font-weight: 900;
       margin-bottom: 16px;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
       line-height: 1.2;
-      color: #000;
+      color: var(--text-bright);
+      text-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
+      position: relative;
+      z-index: 1;
     }
     .hero p {
       font-size: clamp(15px, 2vw, 18px);
-      color: #666;
+      color: var(--text-dim);
       max-width: 680px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
 
+    /* ===== GRID & CARDS ===== */
     .grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -205,41 +228,51 @@
     @media (min-width: 680px) { .grid { grid-template-columns: 1fr 1fr; } }
 
     .card {
-      background: #ffffff;
+      background: var(--card-bg);
       border-radius: 22px;
       padding: 28px;
-      border: 1px solid rgba(0,0,0,.1);
-      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+      border: 1px solid var(--card-border);
+      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
       position: relative;
       overflow: hidden;
+      backdrop-filter: blur(10px);
     }
-    .card::after {
+    .card::before {
       content: '';
       position: absolute;
-      bottom: 0; left: 0; right: 0;
+      top: 0; left: 0; right: 0;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(0,0,0,.18), transparent);
+      background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.5), transparent);
       transform: scaleX(0);
-      transition: transform .3s ease;
+      transition: transform .4s ease;
     }
-    .card:hover::after { transform: scaleX(1); }
+    .card:hover::before { transform: scaleX(1); }
     .card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(0,0,0,.2);
-      box-shadow: 0 10px 40px rgba(0,0,0,.08);
+      transform: translateY(-4px);
+      border-color: rgba(0, 212, 255, 0.45);
+      box-shadow: 0 12px 50px rgba(0, 212, 255, 0.12), 0 0 0 1px rgba(0, 212, 255, 0.1);
+    }
+    .card-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(0, 212, 255, 0.04), transparent);
+      pointer-events: none;
     }
 
     .card h2 {
       font-family: 'Orbitron', monospace;
-      font-size: clamp(16px, 2.5vw, 22px);
-      margin-bottom: 12px;
+      font-size: clamp(15px, 2.2vw, 20px);
+      margin-bottom: 14px;
       font-weight: 700;
+      color: var(--text-bright);
+      letter-spacing: 1px;
     }
     .price {
-      font-size: 15px;
-      color: #888;
+      font-size: 14px;
+      color: var(--accent-cyan);
       margin-bottom: 18px;
       letter-spacing: .5px;
+      opacity: 0.8;
     }
 
     .list {
@@ -251,20 +284,23 @@
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      padding: 9px 0;
-      border-bottom: 1px solid rgba(0,0,0,.07);
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(0, 212, 255, 0.08);
       font-size: 15px;
-      color: #333;
+      color: var(--text-dim);
     }
     .list li:last-child { border-bottom: none; }
     .list li::before {
-      content: '▸';
-      color: #000;
+      content: '◈';
+      color: var(--accent-cyan);
       flex-shrink: 0;
-      margin-top: 2px;
-      opacity: .4;
+      margin-top: 1px;
+      opacity: .6;
+      font-size: 12px;
     }
+    .list li strong { color: var(--accent-cyan); }
 
+    /* ===== BUTTONS ===== */
     .btn-row { display: flex; flex-direction: column; gap: 12px; }
     .btn {
       display: inline-flex;
@@ -273,85 +309,75 @@
       gap: 10px;
       padding: 13px 20px;
       border-radius: 12px;
-      color: white;
-      text-decoration: none;
-      font-family: 'Rajdhani', sans-serif;
+      font-size: 14px;
       font-weight: 700;
-      font-size: 15px;
-      letter-spacing: .5px;
-      transition: transform .15s ease, box-shadow .2s ease;
-      position: relative;
-      overflow: hidden;
+      font-family: 'Exo 2', sans-serif;
+      letter-spacing: .8px;
+      text-decoration: none;
+      transition: all .25s ease;
+      cursor: pointer;
+      text-transform: uppercase;
     }
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%;
-      width: 60%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
-      transition: left .4s ease;
-    }
-    .btn:hover::before { left: 160%; }
-
     .btn-solid {
-      background: #000;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--planet-blue));
       color: #fff;
-      box-shadow: 0 0 20px rgba(0,0,0,.15);
+      border: none;
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
     }
     .btn-solid:hover {
       transform: translateY(-2px);
-      box-shadow: 0 0 35px rgba(0,0,0,.25);
+      box-shadow: 0 0 40px rgba(0, 212, 255, 0.5);
     }
     .btn-outline {
       background: transparent;
-      border: 1px solid rgba(0,0,0,.3);
-      color: #333;
+      border: 1px solid rgba(0, 212, 255, 0.4);
+      color: var(--accent-cyan);
     }
     .btn-outline:hover {
       transform: translateY(-2px);
-      border-color: #000;
-      color: #000;
-      box-shadow: 0 0 20px rgba(0,0,0,.08);
+      border-color: var(--accent-cyan);
+      background: rgba(0, 212, 255, 0.08);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
     }
     .btn-ghost {
-      background: rgba(0,0,0,.04);
-      border: 1px solid rgba(0,0,0,.1);
-      color: #888;
+      background: rgba(0, 212, 255, 0.05);
+      border: 1px solid rgba(0, 212, 255, 0.15);
+      color: var(--text-dim);
     }
     .btn-ghost:hover {
       transform: translateY(-2px);
-      background: rgba(0,0,0,.07);
-      color: #444;
+      background: rgba(0, 212, 255, 0.1);
+      color: var(--text-bright);
     }
 
+    /* ===== SKILLS ===== */
     .skill { margin: 14px 0; }
     .skill-header {
       display: flex;
       justify-content: space-between;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
-      margin-bottom: 7px;
-      color: #555;
+      margin-bottom: 8px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
-    .skill-header span:last-child { color: #000; }
+    .skill-header span:last-child { color: var(--accent-cyan); }
     .progress {
-      background: rgba(0,0,0,.08);
+      background: rgba(0, 212, 255, 0.08);
       border-radius: 999px;
       overflow: hidden;
-      height: 8px;
+      height: 6px;
     }
     .progress-bar {
       height: 100%;
       border-radius: 999px;
-      background: linear-gradient(90deg, #999, #000);
+      background: linear-gradient(90deg, var(--planet-blue), var(--accent-cyan));
       position: relative;
       overflow: hidden;
-      animation: bar-load 1.2s ease both;
+      animation: bar-load 1.4s ease both;
     }
-    @keyframes bar-load {
-      from { width: 0% !important; }
-    }
+    @keyframes bar-load { from { width: 0% !important; } }
     .progress-bar::after {
       content: '';
       position: absolute;
@@ -367,9 +393,9 @@
     .section { margin-top: 28px; }
 
     .divider {
-      margin: 32px 0;
+      margin: 36px 0;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(0,0,0,.15), transparent);
+      background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
       position: relative;
       overflow: hidden;
     }
@@ -379,7 +405,7 @@
       top: 0; left: -30%;
       width: 30%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0,0,0,.5), transparent);
+      background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.8), transparent);
       animation: divider-run 3s ease-in-out infinite;
     }
     @keyframes divider-run {
@@ -391,178 +417,854 @@
       margin-top: 52px;
       text-align: center;
       font-size: 13px;
-      color: #bbb;
-      padding-top: 20px;
-      border-top: 1px solid rgba(0,0,0,.08);
+      color: rgba(100, 150, 200, 0.5);
+      padding-top: 24px;
+      border-top: 1px solid rgba(0, 212, 255, 0.1);
+      letter-spacing: 1px;
     }
+
+    /* ===== MUSIC PLAYER ===== */
+    /* Outer wrapper: clips the rotating beam */
+    #playerWrapper {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      width: 280px;
+      border-radius: 18px;
+      padding: 2px;              /* thickness of the animated border */
+      background: transparent;
+      transition: width 0.35s cubic-bezier(.4,0,.2,1);
+      overflow: hidden;          /* KEY: keeps the spinning element inside */
+    }
+
+    /* The spinning conic gradient sits INSIDE the wrapper */
+    #playerWrapper::before {
+      content: '';
+      position: absolute;
+      /* make it big enough to cover all corners when rotating */
+      width: 200%;
+      height: 200%;
+      top: -50%;
+      left: -50%;
+      background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        var(--accent-cyan) 60deg,
+        transparent 120deg,
+        transparent 360deg
+      );
+      animation: rotateBorder 4s linear infinite;
+      z-index: 0;
+      opacity: 0.8;
+    }
+    @keyframes rotateBorder {
+      100% { transform: rotate(360deg); }
+    }
+
+    #player {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      background: rgba(4, 14, 35, 0.97);
+      border-radius: 16px;        /* slightly less than wrapper = border visible */
+      padding: 16px;
+      font-family: 'Orbitron', monospace;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 40px rgba(0, 212, 255, 0.15), 0 20px 60px rgba(0,0,0,0.6);
+    }
+
+    .player-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .player-title {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    }
+    .player-controls {
+      display: flex;
+      gap: 6px;
+    }
+    .ctrl-btn {
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.25);
+      color: var(--accent-cyan);
+      border-radius: 8px;
+      cursor: pointer;
+      padding: 4px 8px;
+      font-size: 11px;
+      font-family: 'Orbitron', monospace;
+      transition: all .2s ease;
+      line-height: 1;
+    }
+    .ctrl-btn:hover {
+      background: rgba(0, 212, 255, 0.2);
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+    }
+
+    /* Now playing marquee */
+    .now-playing-wrap {
+      background: rgba(0, 212, 255, 0.06);
+      border: 1px solid rgba(0, 212, 255, 0.15);
+      border-radius: 10px;
+      padding: 8px 12px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+    .now-playing-label {
+      font-size: 8px;
+      letter-spacing: 2px;
+      color: rgba(0, 212, 255, 0.5);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+    .now-playing-ticker {
+      font-size: 12px;
+      color: var(--text-bright);
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .now-playing-ticker span {
+      display: inline-block;
+      animation: marquee 10s linear infinite;
+    }
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Progress bar */
+    .music-progress-wrap {
+      margin-bottom: 12px;
+    }
+    .music-progress-bar {
+      width: 100%;
+      height: 3px;
+      background: rgba(0, 212, 255, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .music-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--planet-blue), var(--accent-cyan));
+      border-radius: 999px;
+      transition: width .5s linear;
+      position: relative;
+    }
+    .music-progress-fill::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      background: var(--accent-cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 6px rgba(0, 212, 255, 0.8);
+    }
+
+    /* Song list */
+    #songList {
+      display: block;
+      max-height: 150px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0, 212, 255, 0.3) transparent;
+    }
+    .song-item {
+      cursor: pointer;
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      color: var(--text-dim);
+      transition: all .2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: .5px;
+    }
+    .song-item:hover {
+      background: rgba(0, 212, 255, 0.1);
+      color: var(--text-bright);
+    }
+    .song-item.active {
+      background: rgba(0, 212, 255, 0.15);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(0, 212, 255, 0.25);
+    }
+    .song-num {
+      font-size: 9px;
+      color: rgba(0, 212, 255, 0.4);
+      min-width: 14px;
+    }
+    .song-item.active .song-num {
+      color: var(--accent-cyan);
+    }
+    /* Playing pulse dot */
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent-cyan);
+      border-radius: 50%;
+      flex-shrink: 0;
+      animation: pulseDot .8s ease-in-out infinite alternate;
+      display: none;
+    }
+    .song-item.active .pulse-dot { display: block; }
+    @keyframes pulseDot {
+      from { opacity: 0.3; transform: scale(0.8); }
+      to   { opacity: 1;   transform: scale(1.2); }
+    }
+
+    /* Bottom control bar */
+    .player-bottom {
+      display: flex;
+      gap: 6px;
+      margin-top: 12px;
+    }
+    .btn-play {
+      flex: 1;
+      background: linear-gradient(135deg, var(--planet-blue), var(--accent-cyan));
+      border: none;
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      padding: 8px;
+      font-size: 16px;
+      transition: all .2s ease;
+      box-shadow: 0 0 15px rgba(0, 212, 255, 0.25);
+    }
+    .btn-play:hover {
+      box-shadow: 0 0 25px rgba(0, 212, 255, 0.5);
+      transform: scale(1.03);
+    }
+    .btn-stop {
+      background: rgba(255, 80, 80, 0.15);
+      border: 1px solid rgba(255, 80, 80, 0.3);
+      color: #ff6b6b;
+      border-radius: 10px;
+      cursor: pointer;
+      padding: 8px 12px;
+      font-size: 14px;
+      transition: all .2s ease;
+    }
+    .btn-stop:hover {
+      background: rgba(255, 80, 80, 0.25);
+      box-shadow: 0 0 15px rgba(255, 80, 80, 0.3);
+    }
+    .btn-next {
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      color: var(--accent-cyan);
+      border-radius: 10px;
+      cursor: pointer;
+      padding: 8px 12px;
+      font-size: 14px;
+      transition: all .2s ease;
+    }
+    .btn-next:hover {
+      background: rgba(0, 212, 255, 0.2);
+    }
+
+    /* Visualizer bars */
+    .visualizer {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 20px;
+      margin-bottom: 10px;
+    }
+    .vis-bar {
+      flex: 1;
+      background: linear-gradient(to top, var(--planet-blue), var(--accent-cyan));
+      border-radius: 2px 2px 0 0;
+      opacity: 0.7;
+      animation: visAnim 0s ease-in-out infinite alternate;
+      min-height: 2px;
+    }
+    @keyframes visAnim { from { height: 10%; } to { height: 100%; } }
   </style>
 </head>
 <body>
+
+<!-- Space nebula background -->
+<div class="nebula-bg"></div>
+
+<!-- Space canvas for stars, meteors, planets, satellites -->
+<canvas id="spaceCanvas"></canvas>
+
+<!-- Audio element -->
 <audio id="bgm" loop></audio>
 
-<div id="playlistContainer" style="
-  position: fixed; bottom: 20px; right: 20px; z-index: 1000;
-  background: #000; color: #fff;
-  border-radius: 15px; padding: 15px;
-  width: 250px; font-family: 'Orbitron'; text-align: left;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-  overflow: hidden; /* Biar animasi border gak keluar */
-  border: 4px solid transparent; /* Border dasar, nanti diisi animasi */
-">
-
-  <div style="
-    position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-    background: conic-gradient(transparent, transparent, transparent, #fff);
-    animation: rotateBorder 4s linear infinite;
-    z-index: -1;
-  "></div>
-
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-    <span style="font-size: 14px; text-transform: uppercase;">SENANDUNG DIGITAL</span>
-    <button id="togglePlaylist" style="background: none; border: 1px solid #fff; color: #fff; border-radius: 5px; cursor: pointer; padding: 2px 5px; font-size: 10px;">−</button>
+<!-- ===== MUSIC PLAYER ===== -->
+<div id="playerWrapper">
+<div id="player">
+  <div class="player-header">
+    <div class="player-title">🛸 COSMIC FM</div>
+    <div class="player-controls">
+      <button class="ctrl-btn" id="togglePlaylist">−</button>
+    </div>
   </div>
 
-  <div id="songList" style="display: block; font-size: 12px; max-height: 150px; overflow-y: auto;">
+  <!-- Now Playing -->
+  <div class="now-playing-wrap">
+    <div class="now-playing-label">▶ NOW PLAYING</div>
+    <div class="now-playing-ticker" id="tickerWrap">
+      <span id="tickerText">— Pilih Lagu —</span>
     </div>
+  </div>
+
+  <!-- Visualizer -->
+  <div class="visualizer" id="visualizer"></div>
+
+  <!-- Music progress -->
+  <div class="music-progress-wrap">
+    <div class="music-progress-bar" id="progressBar">
+      <div class="music-progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <!-- Song list -->
+  <div id="songList"></div>
+
+  <!-- Bottom controls -->
+  <div class="player-bottom">
+    <button class="btn-play" id="btnPlay" title="Play/Pause">▶</button>
+    <button class="btn-stop" id="btnStop" title="Stop">■</button>
+    <button class="btn-next" id="btnNext" title="Next">⏭</button>
+  </div>
+</div>
 </div>
 
-<style>
-  @keyframes rotateBorder {
-    100% { transform: rotate(1s); }
-  }
-  /* Gaya buat List Item (Lagu) pas di-hover atau aktif */
-  .song-item { cursor: pointer; padding: 5px; border-radius: 5px; }
-  .song-item:hover { background: #333; }
-  .song-item.active { background: #fff; color: #000; font-weight: bold; }
-</style>
+<!-- ===== MAIN CONTENT ===== -->
+<div class="wrap">
 
-<script>
-  // DAFTAR 4 LAGU LU, GANTI LINKNYA DI SINI BABI!
-  const songs = [
-    { title: "Kekasih Bayangan", src: "https://files.catbox.moe/6zb2bx.mp3" },
-    { title: "No Surprise", src: "https://files.catbox.moe/sj0m68.mp3" },
-    { title: "Element - Rahasia Hati", src: "https://files.catbox.moe/rl7iyf.mp3" },
-    { title: "The night we met", src: "https://files.catbox.moe/9sw6yz.mp3" }
-  ];
-  
-  let currentSong = 0;
-  const music = document.getElementById('bgm');
-  const songList = document.getElementById('songList');
-  const toggleBtn = document.getElementById('togglePlaylist');
+  <header>
+    <div class="logo glitch" data-text="GIXSZ">GIXSZ</div>
+    <span class="badge">🌌 Space Edition</span>
+  </header>
 
-  // NAMPILIN LIST LAGU SECARA OTOMATIS
-  songs.forEach((song, index) => {
-    const div = document.createElement('div');
-    div.className = 'song-item';
-    if (index === currentSong) div.classList.add('active'); // Tandai lagu pertama yang aktif
-    div.innerHTML = (index + 1) + ". " + song.title;
-    div.onclick = () => playSong(index); // Klik lagu buat puter
-    songList.appendChild(div);
-  });
-
-  // FUNGSI BUAT PUTER LAGU
-  function playSong(index) {
-    currentSong = index;
-    music.src = songs[currentSong].src;
-    music.play();
-    
-    // Update Tampilan List (Ganti lagu aktif)
-    const allSongs = document.querySelectorAll('.song-item');
-    allSongs.forEach(s => s.classList.remove('active'));
-    allSongs[currentSong].classList.add('active');
-  }
-
-  // Tombol Minimalis buat minimize/restore list
-  toggleBtn.onclick = () => {
-    if (songList.style.display === 'block') {
-      songList.style.display = 'none';
-      toggleBtn.innerHTML = '+';
-    } else {
-      songList.style.display = 'block';
-      toggleBtn.innerHTML = '−';
-    }
-  };
-
-  // Mulai lagu pertama secara otomatis (tapi browser biasanya blokir auto-play)
-  // Jadi biarin lagu pertama siap, user tinggal klik lagu di list.
-  music.src = songs[currentSong].src;
-</script>
-
-  <div class="wrap">
-
-    <header>
-      <div class="logo">GIXSZ</div>
-      <span class="badge">Preview</span>
-    </header>
-
-
-    <!-- Banner -->
-    <div style="border-radius:16px; overflow:hidden; margin-bottom:8px;">
-      <img src="https://files.catbox.moe/96xpou.png" alt="Banner" style="width:100%; display:block; object-fit:cover;" />
-      <h1 class="neon-white">Gixsz & Skylighttt Store</h1>
-      <p>
-        Halo<br/>
-    Silahkan Belanja di Gixsz & Skylighttt Store
-      </p>
-</section>
-
-
-
-    <div class="divider"></div>
-
-    <div class="grid">
-      <article class="card">
-        <h2 class="neon-white">Produk Kami</h2>
-        <div class="price">Cek di bawah ↓</div>
-        <ul class="list">
-          <li>AM (Alight Motion) — cuma <strong style="color:#000">7K</strong> per akun (order ke Gixsz)</li>
-          <li>Jasa Edit — cuma <strong style="color:#000">3K</strong> per video (order ke Skylighttt)</li>
-        </ul>
-        <div class="btn-row">
-          <a class="btn btn-solid" href="https://wa.me/6287779417785?text=Halooo_Sayang_aku_mau_order_am_prem_nya_donk" target="_blank">
-            ⚡ Order ke Gixsz
-          </a>
-          <a class="btn btn-outline" href="https://wa.me/6289528692798?text=assalamualaikum_bang_gw_mau_order_ jasa edit🙏🏻" target="_blank">
-            💎 Order ke Skylighttt
-          </a>
-        </div>
-      </article>
-
-      <article class="card">
-        <h2 class="neon-white">Skill Level</h2>
-        <div class="skill">
-          <div class="skill-header"><span>Bengong</span><span>90%</span></div>
-          <div class="progress"><div class="progress-bar" style="width:90%"></div></div>
-        </div>
-        <div class="skill">
-          <div class="skill-header"><span>Cari HTML</span><span>75%</span></div>
-          <div class="progress"><div class="progress-bar" style="width:75%"></div></div>
-        </div>
-        <div class="skill">
-          <div class="skill-header"><span>Edit Video</span><span>85%</span></div>
-          <div class="progress"><div class="progress-bar" style="width:85%"></div></div>
-        </div>
-      </article>
-    </div>
-
-    <section class="section">
-      <article class="card">
-        <h2 class="neon-gray">Channel Informasi</h2>
-        <p style="color:#999; margin-bottom:18px;">Info promo dan update terbaru akan hadir segera.</p>
-        <a class="btn btn-ghost" href="https://t.me/" target="_blank">
-          📢 Channel Belum Tersedia
-        </a>
-      </article>
-    </section>
-
-    <footer>
-      © 2026
-      <span style="color:#000; font-family:'Orbitron',monospace; font-size:11px; letter-spacing:2px;">GIXSZ</span>
-      &nbsp;×&nbsp;
-      <span style="color:#666; font-family:'Orbitron',monospace; font-size:11px; letter-spacing:2px;">SKYLIGHTTT</span>
-      &nbsp;— All Rights Reserved
-    </footer>
-
+  <!-- Banner -->
+  <div style="border-radius:20px; overflow:hidden; margin-bottom:28px; border:1px solid rgba(0,212,255,0.2); box-shadow:0 0 40px rgba(0,212,255,0.1);">
+    <img src="https://files.catbox.moe/96xpou.png" alt="Banner" style="width:100%; display:block; object-fit:cover; max-height:200px;" />
   </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <h1 class="glitch" data-text="Gixsz & Skylighttt Store">Gixsz & Skylighttt Store</h1>
+    <p>
+      Halo Selamat Datang di Orbit Kami 🚀<br/>
+      Silahkan Belanja di <span style="color:var(--accent-cyan)">Gixsz & Skylighttt Store</span>
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="grid">
+    <article class="card">
+      <div class="card-glow"></div>
+      <h2>🛰️ Produk Kami</h2>
+      <div class="price">Cek di bawah ↓</div>
+      <ul class="list">
+        <li>AM (Alight Motion) — cuma <strong>7K</strong> per akun (order ke Gixsz)</li>
+        <li>Jasa Edit — cuma <strong>3K</strong> per video (order ke Skylighttt)</li>
+      </ul>
+      <div class="btn-row">
+        <a class="btn btn-solid" href="https://wa.me/6287779417785?text=Halooo_Sayang_aku_mau_order_am_prem_nya_donk" target="_blank">
+          ⚡ Order ke Gixsz
+        </a>
+        <a class="btn btn-outline" href="https://wa.me/6289528692798?text=assalamualaikum_bang_gw_mau_order_jasa_edit🙏🏻" target="_blank">
+          💎 Order ke Skylighttt
+        </a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-glow"></div>
+      <h2>🪐 Skill Level</h2>
+      <div class="skill">
+        <div class="skill-header"><span>Bengong</span><span>90%</span></div>
+        <div class="progress"><div class="progress-bar" style="width:90%"></div></div>
+      </div>
+      <div class="skill">
+        <div class="skill-header"><span>Cari HTML</span><span>75%</span></div>
+        <div class="progress"><div class="progress-bar" style="width:75%"></div></div>
+      </div>
+      <div class="skill">
+        <div class="skill-header"><span>Edit Video</span><span>85%</span></div>
+        <div class="progress"><div class="progress-bar" style="width:85%"></div></div>
+      </div>
+    </article>
+  </div>
+
+  <section class="section">
+    <article class="card">
+      <div class="card-glow"></div>
+      <h2>📡 Channel Informasi</h2>
+      <p style="color:var(--text-dim); margin-bottom:18px;">Info promo dan update terbaru akan hadir segera dari orbit kami.</p>
+      <a class="btn btn-ghost" href="https://t.me/" target="_blank">
+        📢 Channel Belum Tersedia
+      </a>
+    </article>
+  </section>
+
+  <footer>
+    © 2026&nbsp;
+    <span style="color:var(--accent-cyan); font-family:'Orbitron',monospace; font-size:11px; letter-spacing:3px; text-shadow:0 0 10px rgba(0,212,255,0.5);">GIXSZ</span>
+    &nbsp;×&nbsp;
+    <span style="color:#8080cc; font-family:'Orbitron',monospace; font-size:11px; letter-spacing:3px;">SKYLIGHTTT</span>
+    &nbsp;— All Rights Reserved 🌌
+  </footer>
+
+</div>
+
+<!-- ===== SCRIPTS ===== -->
+<script>
+// ============================
+// MUSIC PLAYER
+// ============================
+const songs = [
+  { title: "Kekasih Bayangan", src: "https://files.catbox.moe/6zb2bx.mp3" },
+  { title: "No Surprise", src: "https://files.catbox.moe/sj0m68.mp3" },
+  { title: "Element - Rahasia Hati", src: "https://files.catbox.moe/rl7iyf.mp3" },
+  { title: "The Night We Met", src: "https://files.catbox.moe/9sw6yz.mp3" }
+];
+
+let currentSong = 0;
+let isPlaying = false;
+const music = document.getElementById('bgm');
+const songList = document.getElementById('songList');
+const tickerText = document.getElementById('tickerText');
+const progressFill = document.getElementById('progressFill');
+const btnPlay = document.getElementById('btnPlay');
+const btnStop = document.getElementById('btnStop');
+const btnNext = document.getElementById('btnNext');
+const toggleBtn = document.getElementById('togglePlaylist');
+
+// Visualizer
+const vis = document.getElementById('visualizer');
+const barCount = 18;
+for (let i = 0; i < barCount; i++) {
+  const b = document.createElement('div');
+  b.className = 'vis-bar';
+  const dur = (Math.random() * 0.4 + 0.3).toFixed(2) + 's';
+  const delay = (Math.random() * 0.3).toFixed(2) + 's';
+  b.style.animationDuration = dur;
+  b.style.animationDelay = delay;
+  vis.appendChild(b);
+}
+let visAnimating = false;
+function setVisualizer(on) {
+  vis.querySelectorAll('.vis-bar').forEach(b => {
+    if (on) {
+      b.style.animationPlayState = 'running';
+      b.style.opacity = '0.8';
+    } else {
+      b.style.animationPlayState = 'paused';
+      b.style.opacity = '0.2';
+      b.style.height = '2px';
+    }
+  });
+}
+setVisualizer(false);
+
+// Build song list
+songs.forEach((song, i) => {
+  const div = document.createElement('div');
+  div.className = 'song-item' + (i === 0 ? ' active' : '');
+  div.innerHTML = `<span class="song-num">${i+1}</span><div class="pulse-dot"></div><span>${song.title}</span>`;
+  div.onclick = () => playSong(i);
+  songList.appendChild(div);
+});
+
+function updateTicker(title) {
+  const txt = title + '  ·  ' + title + '  ·  ';
+  tickerText.textContent = txt;
+}
+
+function playSong(index) {
+  currentSong = index;
+  music.src = songs[index].src;
+  music.play().catch(() => {});
+  isPlaying = true;
+  btnPlay.textContent = '⏸';
+  setVisualizer(true);
+  updateTicker(songs[index].title);
+  document.querySelectorAll('.song-item').forEach((s, i) => {
+    s.classList.toggle('active', i === index);
+  });
+}
+
+btnPlay.onclick = () => {
+  if (!music.src || music.src === window.location.href) {
+    playSong(currentSong);
+    return;
+  }
+  if (isPlaying) {
+    music.pause();
+    isPlaying = false;
+    btnPlay.textContent = '▶';
+    setVisualizer(false);
+  } else {
+    music.play().catch(() => {});
+    isPlaying = true;
+    btnPlay.textContent = '⏸';
+    setVisualizer(true);
+  }
+};
+
+btnStop.onclick = () => {
+  music.pause();
+  music.currentTime = 0;
+  isPlaying = false;
+  btnPlay.textContent = '▶';
+  setVisualizer(false);
+  progressFill.style.width = '0%';
+};
+
+btnNext.onclick = () => {
+  currentSong = (currentSong + 1) % songs.length;
+  playSong(currentSong);
+};
+
+music.onended = () => {
+  currentSong = (currentSong + 1) % songs.length;
+  playSong(currentSong);
+};
+
+music.ontimeupdate = () => {
+  if (music.duration) {
+    const pct = (music.currentTime / music.duration) * 100;
+    progressFill.style.width = pct + '%';
+  }
+};
+
+document.getElementById('progressBar').onclick = (e) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const ratio = (e.clientX - rect.left) / rect.width;
+  if (music.duration) music.currentTime = ratio * music.duration;
+};
+
+toggleBtn.onclick = () => {
+  const list = document.getElementById('songList');
+  const playerBottom = document.querySelector('.player-bottom');
+  const vis = document.getElementById('visualizer');
+  const progressWrap = document.querySelector('.music-progress-wrap');
+  const nowPlaying = document.querySelector('.now-playing-wrap');
+  const wrapper = document.getElementById('playerWrapper');
+  if (list.style.display === 'none') {
+    list.style.display = 'block';
+    playerBottom.style.display = 'flex';
+    vis.style.display = 'flex';
+    progressWrap.style.display = 'block';
+    nowPlaying.style.display = 'block';
+    wrapper.style.width = '280px';
+    toggleBtn.textContent = '−';
+  } else {
+    list.style.display = 'none';
+    playerBottom.style.display = 'none';
+    vis.style.display = 'none';
+    progressWrap.style.display = 'none';
+    nowPlaying.style.display = 'none';
+    wrapper.style.width = '160px';
+    toggleBtn.textContent = '+';
+  }
+};
+
+// Load first song but don't auto-play
+music.src = songs[0].src;
+updateTicker(songs[0].title);
+
+
+// ============================
+// SPACE CANVAS
+// ============================
+const canvas = document.getElementById('spaceCanvas');
+const ctx = canvas.getContext('2d');
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// --- STARS ---
+const stars = [];
+for (let i = 0; i < 280; i++) {
+  stars.push({
+    x: Math.random(),
+    y: Math.random(),
+    r: Math.random() * 1.5 + 0.2,
+    alpha: Math.random() * 0.8 + 0.2,
+    twinkleSpeed: Math.random() * 0.02 + 0.005,
+    twinkleOffset: Math.random() * Math.PI * 2,
+    color: ['#e8f4ff','#ccddff','#aabbee','#fff8cc'][Math.floor(Math.random()*4)]
+  });
+}
+
+// --- METEORS ---
+const meteors = [];
+function spawnMeteor() {
+  meteors.push({
+    x: Math.random() * canvas.width * 1.5 - canvas.width * 0.3,
+    y: -20,
+    vx: Math.random() * 5 + 3,
+    vy: Math.random() * 3 + 2,
+    len: Math.random() * 120 + 60,
+    alpha: Math.random() * 0.5 + 0.5,
+    r: Math.random() * 1.2 + 0.4,
+    life: 1,
+    decay: Math.random() * 0.012 + 0.005
+  });
+}
+for (let i = 0; i < 4; i++) spawnMeteor();
+setInterval(() => { if (meteors.length < 8) spawnMeteor(); }, 800);
+
+// --- PLANETS ---
+const planets = [
+  {
+    x: 0.82, y: 0.18,
+    radius: 45,
+    color: '#1a4a8a',
+    highlight: '#2a7aee',
+    ring: true,
+    ringColor: 'rgba(80, 160, 255, 0.35)',
+    speed: 0.0003,
+    phase: 0,
+    glowColor: 'rgba(40, 120, 255, 0.3)'
+  },
+  {
+    x: 0.1, y: 0.65,
+    radius: 28,
+    color: '#5a2a7a',
+    highlight: '#9a5aee',
+    ring: false,
+    speed: 0.0005,
+    phase: 1.2,
+    glowColor: 'rgba(130, 60, 220, 0.3)'
+  },
+  {
+    x: 0.55, y: 0.08,
+    radius: 18,
+    color: '#1a6a5a',
+    highlight: '#2aeeaa',
+    ring: false,
+    speed: 0.0008,
+    phase: 2.5,
+    glowColor: 'rgba(40, 200, 150, 0.25)'
+  }
+];
+
+// --- SATELLITES ---
+class Satellite {
+  constructor(planet, orbitRadius, angle, speed, size) {
+    this.planet = planet;
+    this.orbitRadius = orbitRadius;
+    this.angle = angle;
+    this.speed = speed;
+    this.size = size;
+  }
+  update(t) {
+    this.angle += this.speed;
+  }
+  draw(ctx, px, py) {
+    const sx = px + Math.cos(this.angle) * this.orbitRadius;
+    const sy = py + Math.sin(this.angle) * this.orbitRadius * 0.4;
+
+    // Orbit path (subtle)
+    ctx.beginPath();
+    ctx.ellipse(px, py, this.orbitRadius, this.orbitRadius * 0.4, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(0, 212, 255, 0.07)';
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
+
+    // Satellite body
+    ctx.save();
+    ctx.translate(sx, sy);
+    ctx.rotate(this.angle + Math.PI / 4);
+
+    // Main body
+    ctx.fillStyle = '#8ab0cc';
+    ctx.fillRect(-this.size, -this.size * 0.4, this.size * 2, this.size * 0.8);
+
+    // Solar panels
+    ctx.fillStyle = '#1a4a8a';
+    ctx.fillRect(-this.size * 2.5, -this.size * 1.2, this.size * 1.5, this.size * 2.4);
+    ctx.fillRect(this.size, -this.size * 1.2, this.size * 1.5, this.size * 2.4);
+
+    // Panel shine
+    ctx.fillStyle = 'rgba(0, 212, 255, 0.3)';
+    ctx.fillRect(-this.size * 2.3, -this.size * 1.0, this.size * 1.1, this.size * 2.0);
+    ctx.fillRect(this.size * 0.2, -this.size * 1.0, this.size * 1.1, this.size * 2.0);
+
+    // Signal dot
+    ctx.fillStyle = '#00d4ff';
+    ctx.beginPath();
+    ctx.arc(0, 0, this.size * 0.3, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+  }
+}
+
+const satellites = [
+  new Satellite(planets[0], 90, 0, 0.008, 4),
+  new Satellite(planets[0], 115, Math.PI, 0.005, 3),
+  new Satellite(planets[1], 65, 0.5, 0.012, 2.5),
+];
+
+let t = 0;
+
+function drawPlanet(p) {
+  const px = p.x * canvas.width;
+  const py = p.y * canvas.height;
+  const bob = Math.sin(t * p.speed * 1000 + p.phase) * 4;
+  const ry = py + bob;
+
+  // Glow
+  const grd = ctx.createRadialGradient(px, ry, p.radius * 0.5, px, ry, p.radius * 2.5);
+  grd.addColorStop(0, p.glowColor);
+  grd.addColorStop(1, 'transparent');
+  ctx.fillStyle = grd;
+  ctx.beginPath();
+  ctx.arc(px, ry, p.radius * 2.5, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Ring (back half)
+  if (p.ring) {
+    ctx.save();
+    ctx.globalAlpha = 0.6;
+    ctx.beginPath();
+    ctx.ellipse(px, ry, p.radius * 2.2, p.radius * 0.55, 0, Math.PI, Math.PI * 2);
+    ctx.strokeStyle = p.ringColor;
+    ctx.lineWidth = 6;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // Planet body
+  const grad = ctx.createRadialGradient(px - p.radius * 0.3, ry - p.radius * 0.3, p.radius * 0.1, px, ry, p.radius);
+  grad.addColorStop(0, p.highlight);
+  grad.addColorStop(0.6, p.color);
+  grad.addColorStop(1, '#000');
+  ctx.beginPath();
+  ctx.arc(px, ry, p.radius, 0, Math.PI * 2);
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // Atmosphere shimmer
+  const atmos = ctx.createRadialGradient(px, ry, p.radius * 0.9, px, ry, p.radius * 1.15);
+  atmos.addColorStop(0, 'transparent');
+  atmos.addColorStop(1, p.ringColor || p.glowColor);
+  ctx.beginPath();
+  ctx.arc(px, ry, p.radius * 1.15, 0, Math.PI * 2);
+  ctx.fillStyle = atmos;
+  ctx.fill();
+
+  // Ring (front half)
+  if (p.ring) {
+    ctx.save();
+    ctx.globalAlpha = 0.7;
+    ctx.beginPath();
+    ctx.ellipse(px, ry, p.radius * 2.2, p.radius * 0.55, 0, 0, Math.PI);
+    ctx.strokeStyle = p.ringColor;
+    ctx.lineWidth = 6;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  return { px, py: ry };
+}
+
+function drawMeteor(m) {
+  const angle = Math.atan2(m.vy, m.vx);
+  const tailX = m.x - Math.cos(angle) * m.len;
+  const tailY = m.y - Math.sin(angle) * m.len;
+
+  const grd = ctx.createLinearGradient(tailX, tailY, m.x, m.y);
+  grd.addColorStop(0, 'transparent');
+  grd.addColorStop(0.6, `rgba(136, 204, 255, ${m.life * m.alpha * 0.3})`);
+  grd.addColorStop(1, `rgba(200, 230, 255, ${m.life * m.alpha})`);
+
+  ctx.beginPath();
+  ctx.moveTo(tailX, tailY);
+  ctx.lineTo(m.x, m.y);
+  ctx.strokeStyle = grd;
+  ctx.lineWidth = m.r;
+  ctx.lineCap = 'round';
+  ctx.stroke();
+
+  // Head glow
+  const hGrd = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, m.r * 5);
+  hGrd.addColorStop(0, `rgba(255, 255, 255, ${m.life * m.alpha})`);
+  hGrd.addColorStop(1, 'transparent');
+  ctx.fillStyle = hGrd;
+  ctx.beginPath();
+  ctx.arc(m.x, m.y, m.r * 5, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function animate() {
+  t += 0.016;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Stars
+  stars.forEach(s => {
+    const tw = Math.sin(t * s.twinkleSpeed * 60 + s.twinkleOffset);
+    const a = s.alpha * (0.6 + tw * 0.4);
+    ctx.globalAlpha = Math.max(0, a);
+    ctx.fillStyle = s.color;
+    ctx.beginPath();
+    ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
+    ctx.fill();
+    // Some stars get a cross sparkle
+    if (s.r > 1.2) {
+      ctx.globalAlpha = a * 0.4;
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(s.x * canvas.width - 0.5, s.y * canvas.height - 3, 1, 6);
+      ctx.fillRect(s.x * canvas.width - 3, s.y * canvas.height - 0.5, 6, 1);
+    }
+  });
+  ctx.globalAlpha = 1;
+
+  // Planets + satellites
+  const planetPositions = planets.map(p => drawPlanet(p));
+  satellites.forEach(sat => {
+    sat.update(t);
+    const pos = planetPositions[0]; // attach to first planet
+    sat.draw(ctx, pos.px, pos.py);
+  });
+  // Second satellite group on planet 2
+  ctx.save();
+  satellites[2].draw(ctx, planetPositions[1].px, planetPositions[1].py);
+  ctx.restore();
+
+  // Meteors
+  for (let i = meteors.length - 1; i >= 0; i--) {
+    const m = meteors[i];
+    drawMeteor(m);
+    m.x += m.vx;
+    m.y += m.vy;
+    m.life -= m.decay;
+    if (m.life <= 0 || m.x > canvas.width + 100 || m.y > canvas.height + 100) {
+      meteors.splice(i, 1);
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
 </body>
 </html>
